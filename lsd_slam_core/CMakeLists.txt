@@ -55,7 +55,8 @@ set(CMAKE_CXX_FLAGS
 ) 
 
 # Set source files
-set(lsd_SOURCE_FILES
+# LSD sources
+set(SOURCE_FILES
   ${PROJECT_SOURCE_DIR}/src/DataStructures/Frame.cpp
   ${PROJECT_SOURCE_DIR}/src/DataStructures/FramePoseStruct.cpp
   ${PROJECT_SOURCE_DIR}/src/DataStructures/FrameMemory.cpp
@@ -77,12 +78,24 @@ set(lsd_SOURCE_FILES
   ${PROJECT_SOURCE_DIR}/src/GlobalMapping/g2oTypeSim3Sophus.cpp
   ${PROJECT_SOURCE_DIR}/src/GlobalMapping/TrackableKeyFrameSearch.cpp
 )
+# ROS layer
 set(SOURCE_FILES
-  ${lsd_SOURCE_FILES}
+  ${SOURCE_FILES}
   ${PROJECT_SOURCE_DIR}/src/IOWrapper/ROS/ROSImageStreamThread.cpp
   ${PROJECT_SOURCE_DIR}/src/IOWrapper/ROS/ROSOutput3DWrapper.cpp
+)
+# GUI layer
+if(NO_GUI)
+set(SOURCE_FILES
+  ${SOURCE_FILES}
+  ${PROJECT_SOURCE_DIR}/src/IOWrapper/OpenCV/ImageDisplay_Noop.cpp
+)
+else()
+set(SOURCE_FILES
+  ${SOURCE_FILES}
   ${PROJECT_SOURCE_DIR}/src/IOWrapper/OpenCV/ImageDisplay_OpenCV.cpp
 )
+endif()
 
 include_directories(
   include
